@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Machete de Entrevistas - Darío Bazán</title>
+    <style>
+        :root {
+            --bg-primary: #121214;
+            --bg-secondary: #1a1a1e;
+            --border-color: #2c2c35;
+            --text-main: #e1e1e6;
+            --text-muted: #a8a8b3;
+            --accent: #4ade80;
+            --accent-hover: #22c55e;
+            --tag-bg: #29292e;
+            --sticky-height: auto;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 0 12px 20px 12px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        header {
+            max-width: 900px;
+            margin: 20px auto 15px auto;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Bloque Superior Estricto STICKY al Top */
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(18, 18, 20, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 15px;
+        }
+
+        .controls-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 14px;
+            background-color: #202024;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            transition: border-color 0.2s ease;
+            -webkit-appearance: none;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .filter-group {
+            margin-bottom: 10px;
+        }
+
+        .filter-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .filter-label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .btn-filter {
+            background-color: var(--tag-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .btn-filter.active {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: #000000;
+            font-weight: bold;
+        }
+
+        /* Contador de preguntas */
+        .counter-badge {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding-top: 4px;
+        }
+
+        /* Lista de Preguntas (Dropdown Accordion) */
+        .questions-list {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .question-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+
+        /* Cabecera del desplegable accionable móvil */
+        .question-header {
+            padding: 14px 16px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            user-select: none;
+            background: #1e1e24;
+        }
+
+        .question-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .question-title {
+            font-size: 1rem;
+            color: #ffffff;
+            font-weight: 600;
+            padding-right: 10px;
+            line-height: 1.4;
+        }
+
+        .icon-toggle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 3px;
+            transition: transform 0.2s ease;
+        }
+
+        .question-card.open .icon-toggle {
+            transform: rotate(180deg);
+        }
+
+        .meta-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .tag {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #121214;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        .tag.role-tag {
+            border-color: #38bdf8;
+            color: #38bdf8;
+        }
+
+        .tag.stage-tag {
+            border-color: #f59e0b;
+            color: #f59e0b;
+        }
+
+        .tag.mark-tag {
+            background: rgba(74, 222, 128, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Cuerpo del desplegable */
+        .question-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background: var(--bg-secondary);
+        }
+
+        .question-card.open .question-body {
+            max-height: 3000px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .question-content-inner {
+            padding: 16px;
+        }
+
+        .hint-text {
+            background: #202024;
+            border-left: 4px solid #38bdf8;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+            font-style: italic;
+            border-radius: 0 4px 4px 0;
+            font-size: 0.88rem;
+        }
+
+        .answer-content {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* Estilos de etiquetas destacadas internas */
+        .section-label {
+            display: block;
+            color: #f43f5e;
+            font-weight: bold;
+            margin-top: 12px;
+            margin-bottom: 4px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .section-label:first-child {
+            margin-top: 0;
+        }
+
+        /* Resaltados de palabras clave */
+        strong {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.09);
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        /* Resaltados específicos del PDF para los títulos de preguntas */
+        .q-highlight {
+            color: var(--accent);
+            font-weight: 700;
+            background-color: rgba(74, 222, 128, 0.08);
+            padding: 0 4px;
+            border-radius: 3px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Optimizaciones de responsividad específicas de iPhone */
+        @media (max-width: 480px) {
+            body {
+                padding: 0 8px 15px 8px;
+            }
+            h1 {
+                font-size: 1.3rem;
+            }
+            .controls-container {
+                padding: 10px;
+            }
+            .search-box {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            .btn-filter {
+                padding: 5px 10px;
+                font-size: 0.75rem;
+            }
+            .question-title {
+                font-size: 0.95rem;
+            }
+            .answer-content {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Machete Interactivo de Entrevistas</h1>
+        <p class="subtitle">Dario Javier Bazan — Product Designer & UI Specialist</p>
+    </header>
+
+    <div class="sticky-wrapper">
+        <div class="controls-container">
+            <input type="text" id="search-input" class="search-box" placeholder="🔍 Buscar palabra clave (ej. CRO, Huntech, Shopify, checkout...)" autocomplete="off">
+
+            <div class="filter-group">
+                <span class="filter-label">Filtrar por Rol:</span>
+                <div class="filter-buttons" id="role-filters">
+                    <button class="btn-filter active" data-filter="all">Todos los Roles</button>
+                    <button class="btn-filter" data-filter="Product Designer">Product Designer</button>
+                    <button class="btn-filter" data-filter="Digital Designer">Digital Designer</button>
+                </div>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Filtrar por Etapa:</span>
+                <div class="filter-buttons" id="stage-filters">
+                    <button class="btn-filter active" data-filter="all">Todas las Etapas (All Stages)</button>
+                    <button class="btn-filter" data-filter="Recruiter">Recruiter</button>
+                    <button class="btn-filter" data-filter="interview">Interview</button>
+                    <button class="btn-filter" data-filter="Mark">Mark Wilson (Foco Principal)</button>
+                </div>
+            </div>
+            
+            <div class="counter-badge" id="question-counter">Showing 29 questions</div>
+        </div>
+    </div>
+
+    <div class="questions-list" id="questions-container">
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="Recruiter,interview,Mark" data-order-mark="1">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> Tell me about yourself</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Recruiter</span>
+                    <span class="tag stage-tag">Interview</span>
+                    <span class="tag mark-tag">Mark</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="hint-text">Va a ser la primera pregunta, casi seguro. Asegurate de que salga natural y no muy larga.</div>
+                    <div class="answer-content"><span class="section-label">[INTRODUCCIÓN EXCLUSIVA]</span>I'm Dario, originally from Argentina. I have a degree in Graphic Design, which gave me a <strong>strong visual foundation</strong>. I've worked as a designer for many years across different environments, including startups, digital agencies, and public organizations.
+
+<span class="section-label">[TOURISM WAITAKI]</span>In New Zealand, my first role was with Tourism Waitaki for three and a half years. I was responsible for the <strong>end-to-end visual communication</strong> for the region, managing everything from websites and marketing campaigns to large-scale print, signage, and social media.
+
+<span class="section-label">[BLACKPEPPER]</span>Then, I moved to Auckland and joined Blackpepper, a <strong>specialist eCommerce agency</strong>. There, I worked as a Digital and Product Designer, designing websites, apps, and digital experiences for major brands like Starbucks, Glassons, Hallenstein, and Torpedo7.
+
+My work included creating wireframes, prototypes, and maintaining <strong>scalable design systems</strong>, collaborating with developers, and always focusing on <strong>CRO to improve conversion</strong>. I also supported marketing by designing eDMs, digital assets, and campaigns.
+
+<span class="section-label">[REMATE EXCLUSIVO]</span>Now, I'm looking for my next challenge, and I think this role is a <strong>great fit for my background</strong>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview,Mark" data-order-mark="2">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> Background, Experience BP/TW, Roles, <span class="q-highlight">eCommerce</span>, <span class="q-highlight">eDMs & Marketing</span></div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                    <span class="tag mark-tag">Mark</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="hint-text">Versión más larga de la anterior — por si Mark pide más detalle de tu experiencia.</div>
+                    <div class="answer-content"><span class="section-label">[INTRODUCCIÓN EXCLUSIVA]</span>Across my experience in NZ, I have worked covering the <strong>entire spectrum of digital design</strong>, balancing user needs with business goals.
+
+<span class="section-label">[TOURISM WAITAKI]</span>In New Zealand, my first role was with Tourism Waitaki for three and a half years. I was responsible for the <strong>end-to-end visual communication</strong> for the region, managing everything from websites and marketing campaigns to large-scale print, signage, and social media.
+
+<span class="section-label">[BLACKPEPPER]</span>Then, I moved to Auckland and joined Blackpepper, a <strong>specialist eCommerce agency</strong>. There, I worked as a Digital and Product Designer, designing websites, apps, and digital experiences for major brands like Starbucks, Glassons, Hallenstein, and Torpedo7.
+
+My work included creating wireframes, prototypes, and maintaining <strong>scalable design systems</strong>, collaborating with developers, and always focusing on <strong>CRO to improve conversion</strong>. I also supported marketing by designing eDMs, digital assets, and campaigns.
+
+<span class="section-label">[REMATE EXCLUSIVO]</span>In short, my background allows me to design with the <strong>full user journey in mind</strong>, translating data insights into visual design decisions that <strong>drive revenue growth</strong>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="Recruiter">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> Why are you looking for a new role?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Recruiter</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">My previous company, Blackpepper, went through a <strong>restructure</strong> because they lost some of their main clients and market changes, and my role was made <strong>redundant</strong>.
+
+It was a business decision, nothing related to my work—<strong>my Design Leader and the CEO are happy to be my references</strong>. I really enjoyed my time there and now I'm ready for my next step.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="Recruiter">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> Why are you interested in this role?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Recruiter</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">There are a lot of reasons. Mainly, I really like the product and I think it <strong>aligns perfectly with my background</strong> and what I'm looking for.
+
+I've been researching the website, the YouTube channel, and social media. I think you are doing a great job, but I also noticed some <strong>pain points where we can do better</strong>. I know I can add a lot of value to improve the user experience and support the business goals.
+
+Finally, I like that it's part of a major group like <strong>Publicis</strong>, which offers great benefits and room to grow.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="Recruiter">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> Do you have the right to work in New Zealand?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Recruiter</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">Yes. I'm a <strong>Permanent Resident</strong>, so I have full work rights. No restrictions.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="Recruiter">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> What are your salary expectations?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Recruiter</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">Based on the market and the role, my salary expectation is around <strong>$85,000 to $95,000 NZD</strong>. But I'm open to discuss it depending on the role and the full package.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="Recruiter">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> When can you start?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Recruiter</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">I can start around <strong>mid-July</strong>. I have a planned holiday with my partner that we booked a long time ago. However, if it's strictly necessary to start a bit earlier, I'm open to discussing it.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview,Mark" data-order-mark="3">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> What do you know about <span class="q-highlight">KiwiPlates</span> and our product?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                    <span class="tag mark-tag">Mark</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="hint-text">Mostrás que investigaste el negocio. Repasala bien, en especial la parte de "emotional product" vs "technical/legal complexity".</div>
+                    <div class="answer-content">I know Kiwi Plates is the official provider of personalized plates in New Zealand, operating within Publicis. After researching your website and digital channels, I see KiwiPlates as a unique eCommerce with <strong>two main layers</strong>.
+
+On one side, it's an <strong>emotional product</strong>—people are buying a piece of their identity, a story, or a passion.
+
+But on the other side, it has a <strong>high technical and legal complexity</strong> that a traditional eCommerce doesn't have. It's a real-time creation tool integrated with <strong>NZTA regulations</strong>. The Plate Builder needs to validate database availability instantly and check character restrictions.
+
+Also, the checkout is complex because it has to cater to <strong>three different scenarios</strong>: people buying a plate for themselves, people buying a gift, or users who just want to redesign an existing plate.
+
+From a design perspective, the challenge is making that complex, regulated process feel <strong>simple, secure, and frictionless</strong> for the end user to drive conversion.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview,Mark" data-order-mark="4">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> What did you think about the <span class="q-highlight">Kiwiplates website</span>? Any areas for improvement?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                    <span class="tag mark-tag">Mark</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="hint-text">Mostrar Analisis Heuristico.</div>
+                    <div class="answer-content">Yes, I've been researching KiwiPlates across your website, social media, and YouTube channel. I think you are doing a great job because it's not an easy product to manage.
+
+It's a unique eCommerce. On one side, it's <strong>emotional</strong>—people buy a piece of their identity. On the other side, it has <strong>high technical complexity</strong> with NZTA regulations. I love that the experience offers instant availability search, real-time visualization, and a very focused conversion flow.
+
+To understand it better, I went through the full checkout simulation. I found some <strong>interesting friction points</strong>, so I prepared a quick <strong>heuristic analysis focused on conversion</strong> that I would like to show you.
+
+Of course, I'm aware that I don't know the internal data, or the business or technical limitations that you have. But I'd love to share these ideas if it's okay for you.
+
+<strong>[Show the Heuristic Analysis]</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview,Mark" data-order-mark="5">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> What is <span class="q-highlight">CRO</span>? o "What does <span class="q-highlight">CRO</span> mean to you?"</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                    <span class="tag mark-tag">Mark</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="hint-text">Hacer el checkout más fácil para el usuario, lo que significa más ingresos para el negocio.</div>
+                    <div class="answer-content">Well, CRO (<strong>Si - Ar - Ou</strong>) means Conversion Rate Optimization.
+
+The goal is <strong>using design to remove friction</strong> from the user journey so more people complete the main action.
+
+In short: in eCommerce, it means <strong>making the checkout easier for the user, which drives more revenue for the business</strong>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview,Mark" data-order-mark="6">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> How do you balance business goals with user needs <span class="q-highlight">(la teoría)</span></div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                    <span class="tag mark-tag">Mark</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="hint-text">El objetivo supremo, lograr que ambos ganen. Experiencia fluida y simple el negocio vende y factura.</div>
+                    <div class="answer-content">For me, the balance is <strong>through CRO</strong>.
+
+To help the business goals, the journey must be <strong>completely without friction</strong>.
+
+<strong>First</strong>, I focus on Conversion Rate by making the core flow simple for the user.
+<strong>Second</strong>, the idea is to reduce cart abandonment by designing a clean, easy checkout.
+<strong>And third</strong>, I increase Average Order Value by introducing smart upselling components at the right moment without frustrating the user.
+
+In short: <strong>if you make the experience great for the user, you drive revenue growth for the business</strong>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview,Mark" data-order-mark="7">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> How do you approach <span class="q-highlight">CRO</span> and conversion-focused design <span class="q-highlight">(la practica)</span></div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                    <span class="tag mark-tag">Mark</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="hint-text">CRO (es el puente entre el negocio y el usuario) → Cart Abandonment → AOV, en ese orden, siempre.</div>
+                    <div class="answer-content">For me, CRO (<strong>Si - Ar - Ou</strong>) design is about understanding that every visual decision must drive a business metric. I approach it using a clear hierarchy of <strong>three priorities, always in this specific order</strong>:
+
+<strong>1. Conversion Rate (CVR):</strong> The goal here is to ensure the core user journey is completely without friction. If the user can't complete the main action easily, no other metric matters.
+<strong>2. Cart Abandonment Rate:</strong> I focus on the checkout flow, making sure form fields are simplified, legal requirements are clear, and error states don't frustrate the user.
+<strong>3. Average Order Value (AOV - Ei - Ou - Vi):</strong> Once the conversion flow is stable, I look for UI opportunities to introduce smart upselling or cross-selling components—like suggesting premium plate styles or accessories—at the right moment in the journey without disrupting the purchase.
+
+In short: <strong>First, increase conversion; second, lower cart abandonment; and third, raise the average spend</strong>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> What is the difference between a good UI and a great UX?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">For me, a good UI is about <strong>aesthetics</strong>—clear hierarchy, great typography, and clean components to make the site look premium and trustworthy. But a great UX is about <strong>how easily the user achieves their goal</strong>.
+
+A beautiful website that has a confusing checkout has a good UI but a bad UX. A great design must balance both: <strong>it needs to look good, but it must drive business results</strong>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> How do you measure the success of your designs in eCommerce?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">For me, a successful design in eCommerce means <strong>driving business results by improving key metrics</strong>. A beautiful website that doesn't convert is not a success.
+
+That's why I focus on how my UI decisions impact three main areas: <strong>Conversion Rate, Cart Abandonment, and Average Order Value</strong>. If these numbers go up after the launch and the user journey is smooth, the design is successful. It's all about connecting visual design with business growth.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview,Mark" data-order-mark="8">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> Walk me through a project you're proud of / Can you tell me about a time you improved a user experience (UX)? <span class="q-highlight">(Huntech)</span></div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                    <span class="tag mark-tag">Mark</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="hint-text">Esta es tu carta más fuerte. Practicala en voz alta hasta que los números (125% revenue, 41% AOV) salgan solos.</div>
+                    <div class="answer-content">Yes, absolutely. At Blackpepper, I worked on the eCommerce redesign for <strong>Huntech</strong>. My role was to do the entire UI redesign of the platform, working within a multidisciplinary team under our Design Leader, focusing on the <strong>PLP and PDP where users were dropping off</strong>.
+
+Based on our heuristic analysis, we identified <strong>5 main usability issues on mobile</strong>, mostly related to small touch targets, hidden CTAs, and poor stock visibility.
+
+I translated these findings into <strong>5 concrete UI decisions</strong>. I redesigned the components, created custom icons, and implemented a mobile <strong>Sticky CTA</strong> and a stock-aware selection system, while scaling our main design system library. I delivered clean, production-ready Figma files to the developers.
+
+After the launch, the agency tracked the results, showing a <strong>125% revenue growth year-on-year</strong> and a <strong>41% lift in Average Order Value (AOV)</strong>. I'm really proud of it because it shows how delivering those 5 key design improvements as a team directly moved the needle for the business.
+
+Portfolio link: https://dariobazan.framer.website/work/huntech-en</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> How do you analyse user behaviour to improve your designs?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">I look at the data insights and friction points. In practice, at Blackpepper, we used <strong>heuristic analysis</strong> to review the site and identify where users were dropping off on the PLP and PDP.
+
+For example, on the Huntech project, we analysed the behavior and found that users were leaving because the size selection was confusing on mobile and the CTA was buried. My job is to take those insights and <strong>translate them into better UI layouts and cleaner components in Figma</strong> to solve that behavior.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> Have you ever done a Heuristic Evaluation or UX Audit?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">Yes, I did this at Blackpepper as part of my regular workflow. I'd do a <strong>structured review of a site, flow, or app</strong>, going through the key interactions and identifying usability issues, friction points, and areas where users were likely to drop off. That analysis would then inform the design decisions and priorities.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> Do you have experience with UX Data, A/B Testing, Heatmaps, or Journey Maps?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">I studied UX/UI formally, so I know these tools and understand how they work in a real process. In practice, that side was always led by the Design Lead. My role was to <strong>take those insights and turn them into UI decisions</strong>: better layouts, clearer hierarchy, cleaner components in Figma.
+
+I'm also genuinely interested in that side of design. Things like conversion rate, cart abandonment, and average order value—I find that connection between design decisions and business results really interesting. That's the kind of impact I want my work to have. So I'm not the person who runs the research independently, but I understand it well and I'm <strong>keen to be more involved in that area</strong>. For me it's a natural next step as a designer.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> How do you approach your design process? / What is your workflow?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">Well, it depends on the project, the time, budget, etc. But I always start with the brief to understand the goal and the user, <strong>balancing the user's needs with business goals and tech feasibility</strong>. If I have any doubts, I prefer to ask until everything is clear.
+
+Then, I create wireframes to get the structure right, and if I have the opportunity, I like to validate ideas with the design team before moving into the final UI. From my experience at Blackpepper, as eCommerce specialists, <strong>conversion is always the most important thing in our designs, not just aesthetics</strong>.
+
+After that, I do a clean handoff to the developers. Once we launch, we track the results—like checking the Cart Abandonment Rate—and keep optimizing the design to improve performance.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> What Design Tools do you use?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">I use a mix of tools depending on the project.
+For web and mobile apps, my main tool is <strong>Figma</strong>, where I create wireframes, UI layouts, prototypes, and developer handoff.
+
+I also use the <strong>Adobe Creative Suite</strong>, mainly Photoshop, Illustrator, and InDesign, for marketing assets and print production work.
+
+Additionally, I use <strong>AI tools</strong> to speed up my workflow. For example, I use them to write clearer documentation for developers, repetitive tasks or to analyze and summarize complex briefs.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> What is your experience with Design Systems and Component Libraries?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">At Blackpepper, I <strong>helped maintain the design systems for multiple clients</strong> adding new components, refining existing ones, and making sure everything was scalable and consistent. I worked in Figma using shared libraries, variants, and auto layout.
+
+I believe a good design system is very important because it <strong>makes the team faster and avoids mistakes</strong>, especially when you work with multiple brands at the same time. Also, these days AI tools can help us a lot, so it is always interesting to keep them in mind to improve our workflow.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> What is your experience with Brand Guidelines?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">I have a lot of experience working with brand guidelines, because my background is in graphic design.
+
+For example at BP, I followed <strong>strict guidelines for big local brands</strong> like Torpedo7 and Kings Plant Barn. And at Tourism Waitaki, I <strong>managed the brand identity myself</strong> for the main organization and sub-brands like Alps 2 Ocean. I'm very comfortable following guidelines or managing them to maintain consistency.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> Do you have experience with Shopify?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">I want to be clear about my experience with Shopify. At Blackpepper, we integrated Shopify recently. So, while I was there during the transition, my time working directly with the platform was short.
+
+However, I have extensive experience in e-commerce and digital product design working with major brands like Glassons, Starbucks, and Torpedo7. I focused on <strong>designing mobile interfaces, optimizing conversion, and creating modular design systems</strong>. I know how to structure clean components and work closely with developers.
+
+I know that Shopify has its own design rules and limitations. But I am <strong>very organized with my Figma files and I learn fast</strong>. I am very excited to master the platform.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview,Mark" data-order-mark="9">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> How do you collaborate with <span class="q-highlight">Devs / Marketing / PMs</span></div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                    <span class="tag mark-tag">Mark</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="hint-text">Mark viene de marketing — esto le importa.</div>
+                    <div class="answer-content">I always try to make the team's job as easy as possible. For me, the key is having a <strong>clear workflow and open communication</strong> from day one.
+
+<strong>With developers:</strong> I make sure to deliver clean files, organized layers, clear component names, and well-documented specs. I have a <strong>basic understanding of HTML and CSS</strong>, which helps me design things that are realistic to build. If I ever have a doubt about what is technically possible, I prefer to ask first.
+
+<strong>With the marketing team:</strong> I focus on aligning with them and understanding the brief completely from the start. I make sure to deliver all visual assets in the right formats and on time to <strong>keep brand consistency</strong> across all channels.
+
+<strong>With Project Managers:</strong> I focus on strategic alignment. I make sure to understand the business requirements and timelines so I can prioritize my tasks. If I see any doubt with deadlines or a risk in delivery, I communicate early to find solutions together.
+
+<strong>[Always ready to CLOSE]</strong> Finally, I like to keep <strong>AI tools</strong> in mind these days. I believe they help us a lot to speed up everyone's workflow, optimize delivery times, and allow us to focus on the design decisions that actually matter.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> When a developer tells you a design is too difficult to build, how do you handle it?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">When a developer tells me a design is too difficult to build, I don’t fight it. I prefer to jump on a quick call or check Figma together.
+
+I ask them where the technical problem is, and we <strong>collaborate to find a middle ground</strong>. I’m happy to tweak the UI layout slightly to keep the project on time, without hurting the user experience. For me, <strong>developers are partners, not blockers</strong>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> How do you ensure designs are tested across platforms before handoff?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">Before handoff, I make sure my Figma files cover <strong>all the key breakpoints—desktop, tablet, and mobile</strong>—so developers have a clear reference for every screen size.
+
+Once they build it, I <strong>review the implementation across devices</strong> to check that the design has been translated correctly. If something doesn't look right, I flag it early and work with the developer to fix it. For me it's a <strong>shared responsibility</strong>—I design it right, and we both make sure it lands right.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview,Mark" data-order-mark="10">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> How would you feel being the <span class="q-highlight">Sole Designer</span>? Have you worked in that kind of capacity before?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                    <span class="tag mark-tag">Mark</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="hint-text">KiwiPlates probablemente tenga un equipo chico — esta pregunta es muy probable.</div>
+                    <div class="answer-content">I feel <strong>completely comfortable</strong> with it because I have already done it. As I mentioned, at Tourism Waitaki, I was the sole designer for the region. That experience gave me the <strong>autonomy to lead projects from start to finish</strong> and manage my own priorities.
+
+Honestly, KiwiPlates is the perfect combination for me: <strong>It blends the autonomy of Tourism Waitaki with the eCommerce experience and conversion mindset of Blackpepper.</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="interview">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> How do you handle multiple projects and deadlines?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Interview</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="answer-content">I prioritize tasks based on <strong>deadlines and business impact</strong>. At Blackpepper and Tourism Waitaki, for example, I always managed multiple projects at the same time working across different brands, formats, and stages. In BP we used <strong>ClickUp</strong> to manage tasks, review briefs, and track the whole process.
+
+For me, the key is having a clear system: keeping organized files and clean naming, so I don't lose time on things that should be quick. Finally, I prefer to be honest when a project needs more time. I prefer to <strong>speak up early</strong> instead of rushing and sacrificing quality.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card" data-roles="Product Designer,Digital Designer" data-stages="Recruiter,interview,Mark" data-order-mark="11">
+            <div class="question-header">
+                <div class="question-title-row">
+                    <div class="question-title"><span class="index-num"></span> Do you have questions for us?</div>
+                    <div class="icon-toggle">▼</div>
+                </div>
+                <div class="meta-tags">
+                    <span class="tag role-tag">Product Designer</span>
+                    <span class="tag role-tag">Digital Designer</span>
+                    <span class="tag stage-tag">Recruiter</span>
+                    <span class="tag stage-tag">Interview</span>
+                    <span class="tag mark-tag">Mark</span>
+                </div>
+            </div>
+            <div class="question-body">
+                <div class="question-content-inner">
+                    <div class="hint-text">Siempre al final. Elegí 2-3 de la lista, no las leas todas.</div>
+                    <div class="answer-content"><strong>1. Business/Friction:</strong> From a business perspective, what is the biggest friction point or drop-off area in the current customer journey that you are looking to solve this year?
+
+<strong>2. Role Split:</strong> Can you tell me more about the split between UI/UX design and marketing asset production? I want to understand what a typical week looks like.
+
+<strong>3. Next Steps & Timeline (Ajustado por vacaciones):</strong> What are the next steps in the hiring process? I’d love to know the timeline, how many stages are left, and who I would be meeting with next. As I mentioned to Tash, I have some planned annual leave coming up, so I just want to make sure we are aligned on the dates if we move forward.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const roleButtons = document.querySelectorAll('#role-filters .btn-filter');
+        const stageButtons = document.querySelectorAll('#stage-filters .btn-filter');
+        const cardsContainer = document.getElementById('questions-container');
+        const cards = Array.from(document.querySelectorAll('.question-card'));
+        const counterBadge = document.getElementById('question-counter');
+
+        let currentRole = 'all';
+        let currentStage = 'all';
+        let searchQuery = '';
+
+        // Manejo del Accordion (Abrir/Cerrar)
+        cards.forEach(card => {
+            const header = card.querySelector('.question-header');
+            header.addEventListener('click', () => {
+                card.classList.toggle('open');
+            });
+        });
+
+        // Filtros de Rol
+        roleButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                roleButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentRole = btn.getAttribute('data-filter');
+                filterAndSortQuestions();
+            });
+        });
+
+        // Filtros de Etapa
+        stageButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                stageButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentStage = btn.getAttribute('data-filter');
+                filterAndSortQuestions();
+            });
+        });
+
+        // Entrada del buscador
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase().trim();
+            filterAndSortQuestions();
+        });
+
+        function filterAndSortQuestions() {
+            let visibleCount = 0;
+
+            // 1. Filtrado
+            cards.forEach(card => {
+                const roles = card.getAttribute('data-roles').split(',');
+                const stages = card.getAttribute('data-stages').split(',');
+                const textContent = card.textContent.toLowerCase();
+
+                const roleMatch = (currentRole === 'all' || roles.includes(currentRole));
+                const stageMatch = (currentStage === 'all' || stages.includes(currentStage));
+                const searchMatch = (searchQuery === '' || textContent.includes(searchQuery));
+
+                if (roleMatch && stageMatch && searchMatch) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.remove('open');
+                    card.classList.add('hidden');
+                }
+            });
+
+            // 2. Orden dinámico inteligente
+            const cardsArray = Array.from(cards);
+            if (currentStage === 'Mark') {
+                cardsArray.sort((a, b) => {
+                    const orderA = parseInt(a.getAttribute('data-order-mark')) || 999;
+                    const orderB = parseInt(b.getAttribute('data-order-mark')) || 999;
+                    return orderA - orderB;
+                });
+            } else {
+                cardsArray.sort((a, b) => {
+                    return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+                });
+            }
+
+            // Inyectar orden en el DOM
+            cardsArray.forEach(card => cardsContainer.appendChild(card));
+
+            // 3. Renumeración dinámica en pantalla
+            let index = 1;
+            cardsArray.forEach(card => {
+                if (!card.classList.contains('hidden')) {
+                    card.querySelector('.index-num').textContent = `${index}.`;
+                    index++;
+                }
+            });
+
+            // 4. Actualizar contador
+            counterBadge.textContent = `Showing ${visibleCount} question${visibleCount === 1 ? '' : 's'}`;
+        }
+
+        // Ejecutar orden inicial al cargar
+        filterAndSortQuestions();
+    </script>
+</body>
+</html>
