@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dario Interview Guide — KiwiPlates Focus</title>
+<style>
+:root{
+  --bg-body:#fbfbfa; --bg-card:#ffffff; --text-main:#202020; --text-muted:#74746e;
+  --border:#e4e4df; --green:#1f5f2b; --green-bg:#e7f6df; --yellow:#fff2bd;
+  --yellow-soft:#fff7d8; --entain-bg:#f3e8ff; --entain:#6b21a8; --kiwi-bg:#fff3e2; --kiwi:#b35d08;
+  --p1-bg:#dcfce7; --p1:#166534; --p2-bg:#fef3c7; --p2:#92400e; --p3-bg:#e0f2fe; --p3:#075985;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg-body);color:var(--text-main);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+.wrapper{max-width:980px;margin:0 auto;padding:24px 18px 60px;}
+header{margin:6px 0 20px;}
+h1{font-size:2rem;line-height:1.1;margin:0 0 6px;font-weight:800;letter-spacing:-.02em;}
+.subtitle{color:var(--text-muted);font-size:.95rem;}
+.controls-sticky{position:sticky;top:0;z-index:50;background:rgba(251,251,250,.92);backdrop-filter:blur(14px);padding:12px 0 14px;border-bottom:1px solid rgba(228,228,223,.72);}
+.controls-panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.04);}
+.search-container{position:relative;margin-bottom:12px;}
+.search-box{width:100%;border:1px solid var(--border);border-radius:11px;padding:13px 16px 13px 42px;font-size:1rem;outline:none;background:#fff;}
+.search-box:focus{border-color:#b8b8b0;box-shadow:0 0 0 3px rgba(31,95,43,.07);}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9b9b95;}
+.filter-row{display:flex;align-items:center;gap:12px;margin-top:10px;}
+.filter-label{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);width:82px;flex:0 0 auto;}
+.filter-group{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-filter{background:#fff;border:1px solid var(--border);padding:7px 12px;border-radius:999px;font-size:.84rem;color:#3f3f3c;cursor:pointer;}
+.btn-filter.active{border-color:var(--green);background:#edf7ef;color:var(--green);font-weight:700;}
+.counter-text{font-size:.85rem;color:var(--text-muted);margin-top:13px;border-top:1px solid #f0f0ec;padding-top:10px;}
+#questionsContainer{display:flex;flex-direction:column;margin-top:22px;}
+.part-divider{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--text-muted);margin:26px 0 12px;display:flex;align-items:center;gap:12px;}
+.part-divider::after{content:"";height:1px;background:var(--border);flex:1;}
+.priority-divider{display:none;}
+body.kiwi-mode .section-divider{display:none!important;}
+body.kiwi-mode .priority-divider{display:flex;}
+.accordion-item{background:var(--bg-card);border:1px solid var(--border);border-radius:13px;margin-bottom:12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.02);}
+.accordion-header{width:100%;border:0;background:transparent;text-align:left;cursor:pointer;padding:17px 19px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.accordion-trigger-left{display:flex;align-items:center;gap:14px;min-width:0;}
+.q-idx{font-size:.78rem;color:var(--text-muted);font-weight:700;min-width:25px;}
+.q-title{font-size:1.02rem;font-weight:750;line-height:1.35;}
+.qhl{background:var(--green-bg);color:#102c16;padding:1px 4px;border-radius:3px;font-weight:800;}
+.accordion-trigger-right{display:flex;align-items:center;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end;}
+.badge{font-size:.7rem;font-weight:800;letter-spacing:.02em;padding:5px 8px;border-radius:7px;white-space:nowrap;}
+.badge-section{background:#f4f4f2;color:#666;}
+.badge-kiwi{background:var(--kiwi-bg);color:var(--kiwi);}
+.badge-entain{background:var(--entain-bg);color:var(--entain);}
+.badge-priority.p1{background:var(--p1-bg);color:var(--p1);}
+.badge-priority.p2{background:var(--p2-bg);color:var(--p2);}
+.badge-priority.p3{background:var(--p3-bg);color:var(--p3);}
+.arrow-icon{color:#aaa;font-size:1.1rem;line-height:1;transition:.16s transform;}
+.accordion-content{display:none;border-top:1px solid var(--border);background:#fff;}
+.accordion-body{padding:24px 28px 28px 64px;font-size:1.04rem;line-height:1.58;color:#333;}
+.accordion-body p{margin:0 0 16px;}
+.accordion-body p:last-child{margin-bottom:0;}
+.minihead{font-weight:850;color:#464646;text-transform:uppercase;margin:20px 0 12px;}
+.minihead:first-child{margin-top:0;}
+.hl{background:var(--yellow-soft);box-shadow:inset 0 -0.38em 0 var(--yellow-soft);padding:0 2px;border-radius:2px;}
+strong{font-weight:800;color:#2d2d2b;}
+.link-url{color:#1d4ed8;text-decoration:none;font-weight:650;word-break:break-all;}
+.link-url:hover{text-decoration:underline;}
+.accordion-item.is-open{border-color:#b9b9b2;box-shadow:0 5px 14px rgba(0,0,0,.04);}
+.accordion-item.is-open .accordion-content{display:block;}
+.accordion-item.is-open .arrow-icon{transform:rotate(180deg);}
+.empty-state{display:none;text-align:center;padding:30px;border:1px dashed var(--border);border-radius:13px;background:#fff;color:var(--text-muted);}
+@media(max-width:768px){
+  .wrapper{padding:16px 10px 40px;}
+  h1{font-size:1.45rem;}
+  .subtitle{font-size:.84rem;}
+  .controls-sticky{padding:8px 0 10px;}
+  .controls-panel{padding:12px;border-radius:13px;}
+  .filter-row{align-items:flex-start;flex-direction:column;gap:7px;}
+  .filter-label{width:auto;}
+  .btn-filter{font-size:.8rem;padding:6px 10px;}
+  .accordion-header{padding:14px 14px 13px;align-items:flex-start;flex-direction:column;}
+  .accordion-trigger-left{align-items:flex-start;gap:10px;}
+  .q-idx{min-width:22px;padding-top:2px;}
+  .q-title{font-size:.98rem;}
+  .accordion-trigger-right{justify-content:flex-start;padding-left:32px;}
+  .badge-section{display:none;}
+  .accordion-body{padding:18px 16px 20px 16px;font-size:1rem;line-height:1.55;}
+  .accordion-body p{margin-bottom:15px;}
+  .part-divider{margin:22px 0 10px;font-size:.72rem;}
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<header>
+<h1>Digital Designer / Product Designer 2026</h1>
+<div class="subtitle">Interview guide · KiwiPlates focus · responsive study version</div>
+</header>
+<div class="controls-sticky">
+  <div class="controls-panel">
+    <div class="search-container">
+      <span class="search-icon">⌕</span>
+      <input class="search-box" id="searchInput" placeholder="Search — e.g. Figma, CRO, KiwiPlates, EDMs..." type="text" />
+    </div>
+    <div class="filter-row">
+      <div class="filter-label">Section</div>
+      <div class="filter-group" id="sectionFilterGroup">
+        <button class="btn-filter active" data-section-filter="all">All</button><button class="btn-filter " data-section-filter="INTRO &amp; FIT">Intro &amp; Fit</button><button class="btn-filter " data-section-filter="DIGITAL / UI">Digital/UI</button><button class="btn-filter " data-section-filter="UX / CRO">UX/CRO</button><button class="btn-filter " data-section-filter="QUESTIONS FOR THEM">Questions</button>
+      </div>
+    </div>
+    <div class="filter-row">
+      <div class="filter-label">Interview</div>
+      <div class="filter-group" id="companyFilterGroup">
+        <button class="btn-filter active" data-company-filter="all">All interviews</button>
+        <button class="btn-filter" data-company-filter="kiwi">KiwiPlates</button>
+        <button class="btn-filter" data-company-filter="entain">Entain</button>
+      </div>
+    </div>
+    <div class="counter-text">Showing <strong id="counterDisplay">0</strong> items</div>
+  </div>
+</div>
+<div id="questionsContainer">
+<div class="part-divider section-divider" data-divider="INTRO &amp; FIT" style="order:0.5">INTRO &amp; FIT</div><div class="part-divider section-divider" data-divider="DIGITAL / UI" style="order:8.5">DIGITAL / UI</div><div class="part-divider section-divider" data-divider="UX / CRO" style="order:20.5">UX / CRO</div><div class="part-divider section-divider" data-divider="KIWIPLATES" style="order:30.5">KIWIPLATES</div><div class="part-divider section-divider" data-divider="QUESTIONS FOR THEM" style="order:34.5">QUESTIONS FOR THEM</div><div class="part-divider priority-divider p1d" data-priority-divider="1" style="order:1001">CASI SEGURO</div><div class="part-divider priority-divider p2d" data-priority-divider="2" style="order:1002">MUY PROBABLE</div><div class="part-divider priority-divider p3d" data-priority-divider="3" style="order:1003">POSIBLE</div><div class="accordion-item" data-section="INTRO &amp; FIT" data-kiwi="true" data-entain="true" data-order="1" data-kiwi-rank="1" data-priority="1" style="order:1">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">01</span><span class="q-title">Tell me <span class="qhl">about yourself</span> and your <span class="qhl">experience</span></span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">INTRO &amp; FIT</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p1">CASI SEGURO</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I&#x27;m Dario, originally from Argentina. I have a degree in Graphic Design, which gave me a strong visual foundation.</p>
+<p>I&#x27;ve worked as a designer for many years across different environments, including startups, digital agencies, and public organizations.</p>
+<div class="minihead">TOURISM WAITAKI</div>
+<p>In New Zealand, my first role was with Tourism Waitaki, where I worked for three and a half years.</p>
+<p><span class="hl">As the sole designer</span>, I was responsible for the <strong>visual communication of the region and its sub-brands</strong>.</p>
+<p><span class="hl">My work included designing and maintaining websites and landing pages</span>, creating <strong>digital assets</strong>, digital and print advertising, designing <strong>EDMs</strong>, <span class="hl">working closely with the marketing team</span>, and ensuring <strong>brand consistency</strong> across different channels.</p>
+<div class="minihead">BLACKPEPPER</div>
+<p>Then, I moved to Auckland and joined Blackpepper, a specialist eCommerce agency.</p>
+<p>There, I worked as a Digital and Product Designer, <span class="hl">designing eCommerce websites, apps, and digital experiences</span> for brands such as Starbucks, Glassons, Hallenstein, and Torpedo7.</p>
+<p><span class="hl">My work had a strong focus on CRO (ci-ar-ou)</span>, helping improve the <strong>customer experience and business outcomes</strong>.</p>
+<p>I also <span class="hl">worked closely with marketing teams</span>, designing <strong>EDMs, digital assets, social media content, and campaigns</strong>.</p>
+<p>At the same time, <span class="hl">I collaborated closely with developers</span>, project managers, and other designers to <strong>deliver high-quality digital products</strong>.</p>
+<div class="minihead">REMATE</div>
+<p>Now, I&#x27;m looking for my next challenge, and I feel this role aligns very well with my experience and career goals.</p></div></div>
+</div><div class="accordion-item" data-section="INTRO &amp; FIT" data-kiwi="true" data-entain="false" data-order="2" data-kiwi-rank="7" data-priority="2" style="order:2">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">02</span><span class="q-title">Tell me about your <span class="qhl">Marketing and eDM</span> experience.</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">INTRO &amp; FIT</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p2">MUY PROBABLE</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I&#x27;ve worked closely with marketing teams throughout my career.</p>
+<p>At <span class="hl">Tourism Waitaki</span>, I created campaigns, social media content, websites, brochures, promotional material, and <strong>eDMs</strong> for different tourism brands.</p>
+<p>At <span class="hl">Blackpepper</span>, I supported marketing teams by designing <strong>digital assets, landing pages, campaign content, and eDMs</strong> for eCommerce clients.</p>
+<p>I&#x27;m comfortable taking a <span class="hl">marketing brief</span> and turning it into clear and effective design solutions that support both <strong>customer engagement and business goals</strong>.</p></div></div>
+</div><div class="accordion-item" data-section="INTRO &amp; FIT" data-kiwi="true" data-entain="false" data-order="3" data-kiwi-rank="8" data-priority="2" style="order:3">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">03</span><span class="q-title">Tell me about your <span class="qhl">eCommerce</span> experience.</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">INTRO &amp; FIT</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p2">MUY PROBABLE</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>My <span class="hl">strongest eCommerce</span> experience comes from <strong>Blackpepper</strong>, a specialist eCommerce agency.</p>
+<p>I worked on <span class="hl">websites and digital experiences</span> for brands like Starbucks, Glassons, Hallenstein, and Torpedo7.</p>
+<p>My role included wireframes, UI design, design systems, developer collaboration, and <strong>CRO-focused improvements to help improve conversion</strong>.</p>
+<p>What I enjoy most about eCommerce is the connection between <strong>design decisions, customer behaviour, and business results</strong>.</p></div></div>
+</div><div class="accordion-item" data-section="INTRO &amp; FIT" data-kiwi="false" data-entain="true" data-order="4" data-kiwi-rank="999" data-priority="0" style="order:4">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">04</span><span class="q-title">Why are you <span class="qhl">looking for a new role</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">INTRO &amp; FIT</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>My previous company, <strong>Blackpepper</strong>, <span class="hl">went through a restructure because they lost some of their main clients and market changes</span>, and my role was <strong>made redundant</strong>.</p>
+<p>It was a business decision, nothing related to my work - my Design Leader and the CEO are happy to be my references. I really enjoyed my time there and now I&#x27;m ready for my next step.</p></div></div>
+</div><div class="accordion-item" data-section="INTRO &amp; FIT" data-kiwi="false" data-entain="true" data-order="5" data-kiwi-rank="999" data-priority="0" style="order:5">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">05</span><span class="q-title">Why are you <span class="qhl">interested in this role</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">INTRO &amp; FIT</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I&#x27;m interested in this role because I believe it&#x27;s a <strong>perfect fit for my experience and background</strong>.</p>
+<p>Over the last few years, I&#x27;ve worked on websites, apps, digital products, EDMs, and marketing campaigns, creating user interfaces and collaborating with developers, marketing teams, and stakeholders.</p>
+<p>I enjoy creating high-quality digital experiences that are easy to use and <strong>aligned with business goals</strong>.</p>
+<div class="minihead">Entain</div>
+<p>Particularly with Entain, I believe I can grow professionally while also bringing value through my experience.</p>
+<p>I like that it&#x27;s a large international company behind well-known brands such as TAB, Trackside, and Ladbrokes.</p>
+<p>I see <strong>Entain as a technology company</strong> that creates complex digital products, and that&#x27;s something I&#x27;m excited to be part of.</p>
+<div class="minihead">KiwiPlates</div>
+<p>Particularly with KiwiPlates, I&#x27;m genuinely excited about the product and the opportunity.</p>
+<p>I like that it&#x27;s a <strong>smaller, focused team under a global organisation</strong> like Publicis Groupe.</p>
+<p>I also enjoy the combination of <strong>eCommerce, conversion-focused design</strong>, and working closely with marketing and development teams.</p>
+<p>I feel it aligns very well with my experience and career goals.</p></div></div>
+</div><div class="accordion-item" data-section="INTRO &amp; FIT" data-kiwi="false" data-entain="true" data-order="6" data-kiwi-rank="999" data-priority="0" style="order:6">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">06</span><span class="q-title">Do you have the <span class="qhl">right to work in New Zealand</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">INTRO &amp; FIT</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>Yes. I&#x27;m a Permanent Resident, so I have <strong>full work rights</strong>. No restrictions.</p></div></div>
+</div><div class="accordion-item" data-section="INTRO &amp; FIT" data-kiwi="false" data-entain="true" data-order="7" data-kiwi-rank="999" data-priority="0" style="order:7">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">07</span><span class="q-title">What are your <span class="qhl">salary expectations</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">INTRO &amp; FIT</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>Based on the market and the role, my <strong>salary expectation is around $85,000 to $95,000 NZD</strong>.</p>
+<p>But I&#x27;m open to discuss it depending on the role and the full package.</p></div></div>
+</div><div class="accordion-item" data-section="INTRO &amp; FIT" data-kiwi="false" data-entain="true" data-order="8" data-kiwi-rank="999" data-priority="0" style="order:8">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">08</span><span class="q-title">When can you <span class="qhl">start</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">INTRO &amp; FIT</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I can start around mid-July because I already have a holiday booked with my partner.</p>
+<p>However, <span class="hl">if needed, I&#x27;m happy to discuss an earlier start date</span>.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="false" data-entain="false" data-order="9" data-kiwi-rank="999" data-priority="0" style="order:9">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">09</span><span class="q-title">How do you <span class="qhl">approach</span> your <span class="qhl">Design Process</span>? / <span class="qhl">workflow</span>? <span class="qhl">Brief</span>, your <span class="qhl">approach</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>Well, it depends on the project, the time, budget, etc.</p>
+<p>But I always start with the <span class="hl">brief to understand the goal and the user</span>, balancing the user&#x27;s <strong>needs with business goals and tech feasibility</strong>. If I have any doubts, I prefer to ask until everything is clear.</p>
+<p>Then, I create <strong>wireframes</strong> to get the structure right, and if I have the opportunity, I like to <strong>validate ideas</strong> with the design team before moving into the final UI.</p>
+<p>From my experience at Blackpepper, as eCommerce specialists, <span class="hl">conversion is always the most important thing in our designs</span>, not just aesthetics.</p>
+<p>After that, I do a clean <span class="hl">handoff to the developers</span>. Once we launch, we track the results - like checking the <strong>Cart Abandonment Rate</strong> and keep optimizing the design to improve performance.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="true" data-entain="true" data-order="10" data-kiwi-rank="9" data-priority="2" style="order:10">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">10</span><span class="q-title">How do you <span class="qhl">collaborate</span> with <span class="qhl">Developers</span>, <span class="qhl">Marketing</span>, or <span class="qhl">PMs</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p2">MUY PROBABLE</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I always try to make collaboration as easy as possible.</p>
+<p>For me, <span class="hl">the key is clear communication from the start</span>, and if I have any doubts, I prefer to ask early rather than lose time later.</p>
+<p><span class="hl">With developers</span>, I provide <strong>clean files, organized components, and clear documentation</strong>. I also have a basic understanding of HTML and CSS, which helps me create designs that are realistic to build.</p>
+<p><span class="hl">With Product Designers, Project Managers, and Marketing teams</span>, I focus on <strong>understanding goals, requirements, and the deadlines</strong>.</p>
+<p><span class="hl">This helps me</span> prioritize my work, stay aligned with the team, and deliver the right assets on time.</p>
+<p>I also <span class="hl">like to keep AI tools in mind</span>, as they can <strong>help improve workflows, speed up delivery</strong>, and give us more time to focus on design decisions.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="false" data-entain="false" data-order="11" data-kiwi-rank="999" data-priority="0" style="order:11">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">11</span><span class="q-title">Can you tell me about a time you had a <span class="qhl">disagreement with a developer</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>When a developer tells me a design is too difficult to build, I don&#x27;t fight it.</p>
+<p>I prefer to jump on a quick call or check Figma together. I ask them where the technical problem is, and we collaborate to find a middle ground.</p>
+<p>I&#x27;m happy to tweak the UI layout slightly to keep the project on time, without hurting the user experience.</p>
+<p>For me, <strong>developers are partners, not blockers</strong>.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="false" data-entain="false" data-order="12" data-kiwi-rank="999" data-priority="0" style="order:12">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">12</span><span class="q-title">Describe a <span class="qhl">difficult task</span> you were faced with and how you addressed it.</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>In a past project, we had a <span class="hl">very tight deadline and a technical misalignment</span> and the developer told me that <strong>a key component was too difficult to build</strong> at that time.</p>
+<p>My responsibility here was <strong>balancing technical limitations without losing design quality</strong>.</p>
+<p>So, <strong>instead of pushing back</strong>, I preferred to call him and we checked the Figma files together, and <span class="hl">we found a balanced solution</span>.</p>
+<p>The solution was that I <span class="hl">tweaked the UI layout a bit</span> to <strong>save development time</strong>, without <strong>hurting the core user experience</strong>.</p>
+<p>For me, <span class="hl">working close with devs is key</span> to launch products fast with <strong>great quality</strong>.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="false" data-entain="true" data-order="13" data-kiwi-rank="999" data-priority="0" style="order:13">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">13</span><span class="q-title">How do you handle <span class="qhl">multiple projects</span> and <span class="qhl">deadlines</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I prioritize tasks <span class="hl">based on deadlines and business impact</span>.</p>
+<p>At Blackpepper and Tourism Waitaki, I regularly <strong>managed multiple projects at the same time</strong>, working across different brands, formats, and stages.</p>
+<p>At <span class="hl">Blackpepper</span>, we used <strong>ClickUp to manage the project, review briefs, and track the task</strong>.</p>
+<p>Finally, <span class="hl">I prefer to be honest when a project needs more time</span> and <strong>find a solution early</strong> before losing time.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="false" data-entain="true" data-order="14" data-kiwi-rank="999" data-priority="0" style="order:14">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">14</span><span class="q-title">How do you <span class="qhl">handle feedback</span> or criticism on your designs?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I completely welcome feedback. I see <span class="hl">it as an opportunity to improve my work</span>.</p>
+<p>For me, constructive feedback is an <strong>important part of the design process</strong>.</p>
+<p>I try to <strong>listen carefully, ask questions</strong> when needed, and <strong>put my ego aside</strong> to <span class="hl">learn from the feedback</span>.</p>
+<p>At the end of the day, <strong>we all share the same goal</strong>: creating the <span class="hl">best possible outcome for the user and the business</span>.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="true" data-entain="true" data-order="15" data-kiwi-rank="11" data-priority="3" style="order:15">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">15</span><span class="q-title">What <span class="qhl">Design Tools</span> do you use?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p3">POSIBLE</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I use a mix of tools depending on the project.</p>
+<p><strong>For web and mobile apps</strong>, my main tool is Figma, where I create wireframes, UI layouts, prototypes, and developer handoff.</p>
+<p>I also use <strong>the Adobe Creative Suite</strong>, mainly Photoshop, Illustrator, and InDesign, for marketing assets and print production work.</p>
+<p>Additionally, I use AI tools to speed up my workflow. For example, I use them to write clearer documentation for developers, repetitive tasks or to analyze and summarize complex briefs.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="true" data-entain="true" data-order="16" data-kiwi-rank="12" data-priority="3" style="order:16">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">16</span><span class="q-title">Experience with <span class="qhl">Brand Guidelines</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p3">POSIBLE</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I have <span class="hl">extensive experience working with brand guidelines</span> because my <strong>background is in Graphic Design</strong> and I&#x27;ve been doing this for many years.</p>
+<p><span class="hl">At Tourism Waitaki and Blackpepper</span>, I worked with <strong>brand guidelines for well-known brands</strong> such as Torpedo7, Kings Plant Barn, and Alps 2 Ocean.</p>
+<p>I&#x27;m very comfortable <strong>following and managing brand guidelines</strong> to <strong>ensure consistency</strong> across all customer touchpoints.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="true" data-entain="true" data-order="17" data-kiwi-rank="13" data-priority="3" style="order:17">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">17</span><span class="q-title">Experience with <span class="qhl">Design Systems</span> and <span class="qhl">Component Libraries</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p3">POSIBLE</span><span class="badge badge-entain">Entain</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>At Blackpepper, I helped <span class="hl">maintain design systems</span> for multiple clients, <strong>adding new components, improving existing ones</strong>, and making sure everything was <strong>scalable and consistent</strong>.</p>
+<p>I worked in Figma using <strong>shared libraries, variants, and auto layout</strong>.</p>
+<p>I believe a good DS is very important because it helps teams <span class="hl">work faster, maintain consistency</span>, and <span class="hl">reduce mistakes</span>, especially <strong>when working across multiple brands</strong>.</p>
+<p>I also think AI tools are becoming <strong>very useful for supporting design workflows and documentation</strong>, so it&#x27;s important to keep exploring how they can help teams work more efficiently.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="false" data-entain="false" data-order="18" data-kiwi-rank="999" data-priority="0" style="order:18">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">18</span><span class="q-title">How do you ensure designs are <span class="qhl">tested across platforms</span> before <span class="qhl">handoff</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>Before handoff, I make sure my <strong>Figma files cover all the key breakpoints</strong> - desktop, tablet, and mobile - so developers have a clear reference for every screen size.</p>
+<p>Once they build it, I review the implementation across devices to check that the design has been translated correctly.</p>
+<p>If something doesn&#x27;t look right, I flag it early and work with the developer to fix it.</p>
+<p>For me it&#x27;s a <strong>shared responsibility</strong> - I design it right, and we both make sure it lands right.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="false" data-entain="false" data-order="19" data-kiwi-rank="999" data-priority="0" style="order:19">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">19</span><span class="q-title">What is the <span class="qhl">difference</span> between a <span class="qhl">good UI</span> and a <span class="qhl">great UX</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>For me, <span class="hl">a good UI is about aesthetics</span> - clear hierarchy, great typography, and clean components to make the site look premium and trustworthy.</p>
+<p>But <span class="hl">a great UX is about</span> how easily the user achieves their goal. A beautiful website that has a confusing checkout has a good UI but a bad UX.</p>
+<p>A <span class="hl">great design must balance both</span>: it needs to look good, but it must drive business results.</p></div></div>
+</div><div class="accordion-item" data-section="DIGITAL / UI" data-kiwi="false" data-entain="false" data-order="20" data-kiwi-rank="999" data-priority="0" style="order:20">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">20</span><span class="q-title">Do you have experience with <span class="qhl">Shopify</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">DIGITAL / UI</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I want to be clear about my experience with Shopify.</p>
+<p><span class="hl">At Blackpepper, we integrated Shopify recently</span>. So, while I was there during the transition, my time working directly with the platform was short.</p>
+<p>However, <strong>I have experience in e-commerce and digital product design</strong> working with major brands like Glassons, Starbucks, and Torpedo7. I focused on designing mobile interfaces, optimizing conversion, and creating modular design systems.</p>
+<p>I know how to structure clean components and work closely with developers.</p>
+<p><span class="hl">I know that Shopify has its own design rules and limitations</span>. But I am very organized with my Figma files and I learn fast. I am very excited to master the platform.</p></div></div>
+</div><div class="accordion-item" data-section="UX / CRO" data-kiwi="true" data-entain="false" data-order="21" data-kiwi-rank="5" data-priority="1" style="order:21">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">21</span><span class="q-title">⭐ Huntech Case Study - Walk me through a project you are <span class="qhl">proud of</span> / Tell me about a time you <span class="qhl">improved conversion</span>.</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">UX / CRO</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p1">CASI SEGURO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><div class="minihead">Context</div>
+<p>At Blackpepper, I worked on the eCommerce redesign for Huntech, an outdoor clothing brand.</p>
+<p>My role was to <strong>lead the UI redesign</strong>, working within a multidisciplinary team under our Design Leader.</p>
+<p>The project involved a full eCommerce redesign, but our biggest opportunities were identified on mobile, particularly on the <strong>PDP &amp; PLP</strong>.</p>
+<div class="minihead">Problem</div>
+<p>As part of the project, I conducted a <strong>heuristic analysis</strong> and identified <strong>five major usability issues</strong>.</p>
+<p>The biggest problems were <strong>small touch targets, hidden calls to action, and poor stock visibility</strong>, particularly on mobile.</p>
+<p>These issues were creating friction in the shopping experience and affecting purchase decisions.</p>
+<div class="minihead">Solution / My Role</div>
+<p>My role was to translate those findings into UI solutions.</p>
+<p>I redesigned key components, improved stock visibility, introduced a <strong>mobile sticky CTA</strong>, and created custom icons to make the experience clearer and easier to use.</p>
+<p>I also worked within the design system and delivered production-ready Figma files for development.</p>
+<div class="minihead">Results</div>
+<p>After launch, the agency tracked the results and saw a <strong>125% increase in revenue year-over-year</strong> and a <strong>41% increase in Average Order Value</strong>.</p>
+<div class="minihead">Why I&#x27;m Proud</div>
+<p>I&#x27;m really proud of this project because it showed how <strong>UI improvements</strong> can have a significant impact on both <strong>user experience and business performance</strong>.</p>
+<div class="minihead">Possible follow-up: How did you identify those opportunities?</div>
+<p>I identified them through a <span class="hl">heuristic analysis of the website</span>, especially on mobile.</p>
+<p>I reviewed the main customer journey across the <strong>PLP, PDP, and checkout</strong>, looking for usability issues and friction points that could affect conversion.</p>
+<p>For example, I noticed <strong>small touch targets, hidden calls to action, and poor stock visibility</strong>. From there, I prioritised the issues based on their potential impact on the customer experience and conversion.</p>
+<div class="minihead">Possible follow-up: Why did you prioritise those changes?</div>
+<p>I prioritised those changes because they were directly affecting the customer&#x27;s ability to purchase.</p>
+<p>If users can&#x27;t easily find the CTA, understand stock availability, or interact with key elements on mobile, they are more likely to leave the site without buying.</p>
+<p><span class="hl">My focus was on removing friction from the journey first</span>, because improving the core experience usually has the biggest impact on conversion.</p>
+<p><a class="link-url" href="https://dariobazan.framer.website/work/huntech-en" target="_blank">https://dariobazan.framer.website/work/huntech-en</a></p></div></div>
+</div><div class="accordion-item" data-section="UX / CRO" data-kiwi="false" data-entain="false" data-order="22" data-kiwi-rank="999" data-priority="0" style="order:22">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">22</span><span class="q-title">What is <span class="qhl">CRO</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">UX / CRO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>Well, CRO (Ci - Ar - Ou) means <strong>Conversion Rate Optimization</strong>.</p>
+<p><span class="hl">The goal here is to ensure the core user journey is as frictionless as possible</span>.</p>
+<p>In short: in eCommerce, it means <strong>making the checkout easier for the user, which drives more revenue for the business</strong>.</p></div></div>
+</div><div class="accordion-item" data-section="UX / CRO" data-kiwi="true" data-entain="false" data-order="23" data-kiwi-rank="6" data-priority="1" style="order:23">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">23</span><span class="q-title">How do you <span class="qhl">approach CRO</span> and conversion-focused design?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">UX / CRO</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p1">CASI SEGURO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>For me, <span class="hl">CRO design is about connecting design decisions with business outcomes</span>.</p>
+<p>I approach it using a clear hierarchy of three priorities:</p>
+<p>First, <span class="hl">Conversion Rate (CVR)</span>. The goal here is to ensure <strong>the core user journey is completely without friction</strong>. If the user can&#x27;t complete the main action easily, <strong>no other metric matters</strong>.</p>
+<p>Second, <span class="hl">Cart Abandonment Rate</span>. I focus on <strong>the checkout flow</strong>, making sure form fields are simplified, legal requirements are clear, and error states don&#x27;t frustrate the user.</p>
+<p>And third, <span class="hl">Average Order Value - AOV (Ei - Ou - Vi)</span>. Once the conversion flow is stable, I look for UI opportunities to introduce <strong>smart upselling or cross-selling</strong> components at the right moment in the journey without disrupting the purchase.</p>
+<p>In short: <strong>First, increase conversion; second, lower cart abandonment; and third, raise the average spend</strong>.</p></div></div>
+</div><div class="accordion-item" data-section="UX / CRO" data-kiwi="false" data-entain="false" data-order="24" data-kiwi-rank="999" data-priority="0" style="order:24">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">24</span><span class="q-title"><span class="qhl">eCommerce</span> &amp; <span class="qhl">CRO Framework</span></span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">UX / CRO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><div class="minihead">1. CR / CVR (Conversion Rate)</div>
+<p>Es la métrica principal. Si la web no convierte, ninguna otra métrica importa. Todo tu trabajo de UX/UI impacta directamente acá.</p>
+<div class="minihead">2. Cart Abandonment Rate</div>
+<p>Es el cuello de botella más crítico. El usuario ya mostró intención de compra pero se trabó al final. Tu foco en el diseño del checkout es bajar este porcentaje.</p>
+<div class="minihead">3. AOV (Average Order Value)</div>
+<p>Una vez que lográs que la web convierta de forma estable, el siguiente paso del negocio es que cada cliente gaste más plata en esa compra a través de componentes de Upselling o Cross-selling.</p>
+<p><span class="hl">En resumen: Primero que compren (CR), segundo que no abandonen el carrito, y tercero que gasten más (AOV)</span>.</p>
+<div class="minihead">Other Metrics</div>
+<p>CTA &amp; Above the Fold, Bounce Rate, Revenue Growth, LTV/CLV, CAC, Below the Fold, Upselling and Cross-selling.</p></div></div>
+</div><div class="accordion-item" data-section="UX / CRO" data-kiwi="false" data-entain="false" data-order="25" data-kiwi-rank="999" data-priority="0" style="order:25">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">25</span><span class="q-title">How do you balance <span class="qhl">business goals</span> with <span class="qhl">user needs</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">UX / CRO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>For me, <span class="hl">the balance is through CRO</span>.</p>
+<p><strong>To help the business goals, the journey must be completely without friction</strong>.</p>
+<p>First, I focus on Conversion Rate by making the <strong>core flow simple for the user</strong>.</p>
+<p>Second, the idea is to <span class="hl">reduce cart abandonment</span> by designing <strong>a clean, easy checkout</strong>.</p>
+<p>And third, I <span class="hl">increase Average Order Value</span> by introducing <strong>smart upselling</strong> components at the right moment without frustrating the user.</p>
+<p>In short: <span class="hl">if you make the experience great for the user, you drive revenue growth for the business</span>.</p></div></div>
+</div><div class="accordion-item" data-section="UX / CRO" data-kiwi="false" data-entain="false" data-order="26" data-kiwi-rank="999" data-priority="0" style="order:26">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">26</span><span class="q-title">How do you <span class="qhl">analyse user behaviour</span> to <span class="qhl">improve your designs</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">UX / CRO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p><span class="hl">I look at the data insights and friction points</span>. In practice, at Blackpepper, we used <strong>heuristic analysis</strong> to review the site and identify where users were dropping off on the PLP and PDP.</p>
+<p>For example, on the Huntech project, we analysed the behavior and found that users were leaving because the <strong>size selection was confusing on mobile</strong> and the <strong>CTA was buried</strong>.</p>
+<p>My job is to take those insights and translate them into <strong>better UI layouts and cleaner components in Figma</strong> to solve that behavior.</p></div></div>
+</div><div class="accordion-item" data-section="UX / CRO" data-kiwi="false" data-entain="false" data-order="27" data-kiwi-rank="999" data-priority="0" style="order:27">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">27</span><span class="q-title">Do you have experience with <span class="qhl">UX Data</span>, <span class="qhl">A/B Testing</span>, <span class="qhl">Heatmaps</span>, or <span class="qhl">Journey Maps</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">UX / CRO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I studied UX/UI formally, so <strong>I know these tools and understand how they work in a real process</strong>.</p>
+<p>In practice, that side was always led by the Design Lead. My role was to take those insights and turn them into UI decisions - better layouts, clearer hierarchy, cleaner components in Figma.</p>
+<p><strong>I&#x27;m also genuinely interested in that side of design</strong>. Things like conversion rate, cart abandonment, and average order value - I find that connection between design decisions and business results really interesting.</p>
+<p>So I&#x27;m not the person who runs the research independently, but I understand it well and I&#x27;m keen to be more involved in that area. <strong>For me it&#x27;s a natural next step as a designer</strong>.</p></div></div>
+</div><div class="accordion-item" data-section="UX / CRO" data-kiwi="false" data-entain="false" data-order="28" data-kiwi-rank="999" data-priority="0" style="order:28">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">28</span><span class="q-title">Have you ever done a <span class="qhl">Heuristic Evaluation</span> or <span class="qhl">UX Audit</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">UX / CRO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>Yes, I did this at Blackpepper as part of my regular workflow. I&#x27;d do a structured review of a site, flow, or app.</p>
+<p>Going through the key interactions and identifying usability issues, friction points, and areas where users were likely to drop off.</p>
+<p>That analysis would then inform the design decisions and priorities.</p></div></div>
+</div><div class="accordion-item" data-section="UX / CRO" data-kiwi="false" data-entain="false" data-order="29" data-kiwi-rank="999" data-priority="0" style="order:29">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">29</span><span class="q-title">How do you <span class="qhl">approach improving an eCommerce</span> platform you&#x27;re new to?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">UX / CRO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I approach it in three main steps.</p>
+<p>First, <span class="hl">I focus on immersion and data</span>. I need to <strong>understand the business goals, the target audience</strong>, and look at the existing analytics - like where the highest drop-offs are in the funnel.</p>
+<p>Second, <span class="hl">I conduct a heuristic analysis</span> of the current platform, especially on mobile. I review key pages like the PLP, PDP, and checkout to identify immediate friction points, usability issues, or confusing error states.</p>
+<p>Finally, <strong>I prioritize using my CRO framework</strong>. I don&#x27;t try to redesign everything at once. I focus first on quick wins that improve Conversion Rate, then on reducing Cart Abandonment, and later on driving Average Order Value.</p></div></div>
+</div><div class="accordion-item" data-section="UX / CRO" data-kiwi="false" data-entain="false" data-order="30" data-kiwi-rank="999" data-priority="0" style="order:30">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">30</span><span class="q-title">How do you <span class="qhl">measure the success</span> of your <span class="qhl">designs in eCommerce</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">UX / CRO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>For me, a successful design in eCommerce means driving business results by improving key metrics.</p>
+<p>A beautiful website that doesn&#x27;t convert is not a success.</p>
+<p>That&#x27;s why I focus on how my UI decisions impact three main areas: <strong>Conversion Rate, Cart Abandonment, and Average Order Value</strong>.</p>
+<p>If these numbers go up after the launch and the user journey is smooth, the design is successful. It&#x27;s all about connecting visual design with business growth.</p></div></div>
+</div><div class="accordion-item" data-section="KIWIPLATES" data-kiwi="true" data-entain="false" data-order="31" data-kiwi-rank="3" data-priority="1" style="order:31">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">31</span><span class="q-title">What do you know about <span class="qhl">KiwiPlates</span> and our <span class="qhl">product</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">KIWIPLATES</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p1">CASI SEGURO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>KiwiPlates is the official provider of personalized plates in NZ, operating under Publicis Groupe.</p>
+<p>I&#x27;ve been exploring the KiwiPlates website and digital channels, and I realised that KiwiPlates has two main layers.</p>
+<p>On one side, it&#x27;s an <span class="hl">emotional product</span> - people buy a piece of their identity, a story, or a passion.</p>
+<p>But on the other side, KiwiPlates represents a <span class="hl">high level of technical and legal complexity</span>. The Plate Builder needs to check availability and show the <strong>NZTA regulations in real-time</strong>.</p>
+<p>Also, the checkout is complex because it has <strong>3 different scenarios</strong>: buying a plate for yourself, buying a gift, or redesigning an existing plate.</p>
+<p>From a design perspective, the challenge is making that <strong>complex and regulated process feel simple, secure, and without friction</strong> to drive conversion.</p></div></div>
+</div><div class="accordion-item" data-section="KIWIPLATES" data-kiwi="true" data-entain="false" data-order="32" data-kiwi-rank="4" data-priority="1" style="order:32">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">32</span><span class="q-title">What did you think about the <span class="qhl">KiwiPlates website</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">KIWIPLATES</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p1">CASI SEGURO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>Yes, I&#x27;ve been researching KiwiPlates site, social media, and YouTube channel. I think you&#x27;ve built a really interesting product and experience.</p>
+<p>It&#x27;s a <span class="hl">unique eCommerce</span>. On one side, it&#x27;s emotional - people buy a piece of their identity. On the other side, it has <strong>high technical complexity with NZTA regulations</strong>.</p>
+<p>I love that the experience offers <strong>instant availability search, real-time visualization</strong>, and a very focused conversion flow.</p>
+<p>To understand it better, I went through the full checkout simulation. I identified a few potential friction points, so I prepared a <span class="hl">quick heuristic analysis focused on conversion</span> that I would like to show you.</p>
+<p>Of course, I don&#x27;t have access to analytics, customer data, or internal business and technical limitations.</p>
+<p>But I&#x27;d love to share the ideas with you if you&#x27;re interested.</p>
+<div class="minihead">Show the Heuristic Analysis</div></div></div>
+</div><div class="accordion-item" data-section="KIWIPLATES" data-kiwi="true" data-entain="false" data-order="33" data-kiwi-rank="2" data-priority="1" style="order:33">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">33</span><span class="q-title">Why are you <span class="qhl">interested in KiwiPlates</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">KIWIPLATES</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p1">CASI SEGURO</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>There are a few reasons why I&#x27;m interested in KiwiPlates.</p>
+<p>When I read the job description, I honestly felt it was a <strong>perfect fit for my experience</strong>.</p>
+<p>At Tourism Waitaki, I worked as the sole designer, managing websites and supporting the marketing team by creating <strong>digital assets, campaigns, and eDMs</strong>.</p>
+<p>Then, at Blackpepper, I specialised in <strong>eCommerce and conversion-focused design</strong> while continuing to work closely with marketing teams on <strong>eDMs, campaigns, and digital assets</strong>.</p>
+<p>Basically, KiwiPlates brings together <span class="hl">the best of those two worlds</span>, and I feel I can add real value here.</p></div></div>
+</div><div class="accordion-item" data-section="KIWIPLATES" data-kiwi="true" data-entain="false" data-order="34" data-kiwi-rank="10" data-priority="2" style="order:34">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">34</span><span class="q-title">How would you feel being the <span class="qhl">Sole Designer</span>?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">KIWIPLATES</span><span class="badge badge-kiwi">KiwiPlates</span><span class="badge badge-priority p2">MUY PROBABLE</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p>I feel completely comfortable with it because <strong>I have already done it</strong>.</p>
+<p>As I mentioned, at Tourism Waitaki, I was the <span class="hl">sole designer for the region</span>. That experience gave me the <strong>autonomy to lead projects from start to finish</strong> and manage my own priorities.</p>
+<p>Honestly, KiwiPlates is the perfect combination for me:</p>
+<p>It blends the <span class="hl">autonomy of Tourism Waitaki</span> with the <span class="hl">eCommerce experience and conversion mindset of Blackpepper</span>.</p></div></div>
+</div><div class="accordion-item" data-section="QUESTIONS FOR THEM" data-kiwi="false" data-entain="false" data-order="35" data-kiwi-rank="999" data-priority="0" style="order:35">
+<button class="accordion-header" type="button">
+<div class="accordion-trigger-left"><span class="q-idx">35</span><span class="q-title">Do you have <span class="qhl">questions</span> for us?</span></div>
+<div class="accordion-trigger-right"><span class="badge badge-section">QUESTIONS FOR THEM</span><span class="arrow-icon">⌄</span></div>
+</button>
+<div class="accordion-content"><div class="accordion-body"><p class="numbered">1. What does a typical day look like for someone in this role?</p>
+<p class="numbered">2. What would success look like in this role during the first six to twelve months?</p>
+<p class="numbered">3. How is the design team structured, and who would I be working most closely with?</p>
+<p class="numbered">4. From a business perspective, what is the biggest friction point or drop-off area in the current customer journey that you are looking to solve this year?</p>
+<p class="numbered">5. How are digital projects typically prioritized? Who identifies opportunities for website improvements, and how does that process usually work?</p>
+<p class="numbered">6. Can you tell me more about the split between UI/UX design and marketing asset production? I want to understand what a typical week looks like.</p>
+<p class="numbered">7. How do the product and development teams currently collaborate here? Will I be working directly with the developers during implementation?</p>
+<p class="numbered">8. Is there an existing design system or component library for the platform that I would be working with and expanding?</p>
+<p class="numbered">9. What are the next steps in the hiring process? I&#x27;d love to know the timeline, how many stages are left, and who I would be meeting with next.</p>
+<p>As I mentioned to Tash, I have some planned annual leave coming up, so I just want to make sure we are aligned on the dates if we move forward.</p></div></div>
+</div>
+</div>
+<div class="empty-state" id="emptyState">No matching questions.</div>
+</div>
+<script>
+const searchInput=document.getElementById('searchInput');
+const items=[...document.querySelectorAll('.accordion-item')];
+const sectionDividers=[...document.querySelectorAll('.section-divider')];
+const priorityDividers=[...document.querySelectorAll('.priority-divider')];
+const counter=document.getElementById('counterDisplay');
+const empty=document.getElementById('emptyState');
+let activeSection='all';
+let activeCompany='all';
+function setActive(group, selector, value){
+  document.querySelectorAll(group+' .btn-filter').forEach(b=>b.classList.toggle('active', b.getAttribute(selector)===value));
+}
+document.querySelectorAll('[data-section-filter]').forEach(btn=>btn.addEventListener('click',()=>{activeSection=btn.dataset.sectionFilter;setActive('#sectionFilterGroup','data-section-filter',activeSection);applyFilters();}));
+document.querySelectorAll('[data-company-filter]').forEach(btn=>btn.addEventListener('click',()=>{activeCompany=btn.dataset.companyFilter;setActive('#companyFilterGroup','data-company-filter',activeCompany);applyFilters();}));
+searchInput.addEventListener('input',applyFilters);
+document.querySelectorAll('.accordion-header').forEach(btn=>btn.addEventListener('click',()=>btn.closest('.accordion-item').classList.toggle('is-open')));
+function applyFilters(){
+  const q=searchInput.value.trim().toLowerCase();
+  const kiwiMode=activeCompany==='kiwi';
+  document.body.classList.toggle('kiwi-mode', kiwiMode);
+  let visibleCount=0;
+  items.forEach(el=>{
+    const text=el.innerText.toLowerCase();
+    const section=el.dataset.section;
+    const companyOK=activeCompany==='all' || (activeCompany==='kiwi'&&el.dataset.kiwi==='true') || (activeCompany==='entain'&&el.dataset.entain==='true');
+    const sectionOK=activeSection==='all' || section===activeSection;
+    const searchOK=!q || text.includes(q);
+    const show=companyOK&&sectionOK&&searchOK;
+    el.style.display=show?'block':'none';
+    if(show) visibleCount++;
+    if(kiwiMode){
+      const rank=parseInt(el.dataset.kiwiRank||999,10);
+      el.style.order=rank<999?rank*10:9999;
+    }else{
+      el.style.order=parseFloat(el.dataset.order)*10;
+    }
+  });
+  // Normal section dividers: show only if non-kiwi mode and relevant items visible
+  sectionDividers.forEach(d=>{
+    const sec=d.dataset.divider;
+    const has=items.some(el=>el.style.display!=='none' && el.dataset.section===sec);
+    d.style.display=(!kiwiMode && has)?'flex':'none';
+    const first=items.filter(el=>el.dataset.section===sec).map(el=>parseInt(el.dataset.order,10)).sort((a,b)=>a-b)[0]||999;
+    d.style.order=first*10-5;
+  });
+  // Priority dividers for kiwi mode only
+  priorityDividers.forEach(d=>{
+    const p=d.dataset.priorityDivider;
+    const visible=kiwiMode && items.some(el=>el.style.display!=='none' && el.dataset.priority===p);
+    d.style.display=visible?'flex':'none';
+    const base=p==='1'?0:p==='2'?60:100;
+    d.style.order=base+1;
+  });
+  if(kiwiMode){
+    items.forEach(el=>{
+      const p=el.dataset.priority;
+      const r=parseInt(el.dataset.kiwiRank||999,10);
+      if(p==='1') el.style.order=10+r;
+      else if(p==='2') el.style.order=70+r;
+      else if(p==='3') el.style.order=110+r;
+    });
+  }
+  counter.textContent=visibleCount;
+  empty.style.display=visibleCount?'none':'block';
+}
+applyFilters();
+</script>
+</body>
+</html>
