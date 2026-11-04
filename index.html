@@ -129,6 +129,18 @@ p.ind{margin-left:14px;padding-left:14px;border-left:2px solid var(--violet-mid)
 .qlist{margin:0 0 6px;padding-left:22px}
 .qlist li{margin:6px 0;padding-left:4px}
 
+
+/* cover letters */
+a.tool{text-decoration:none;display:inline-flex;align-items:center}
+.lettertext{margin:14px 0 6px;padding:20px 22px;background:var(--bg);border:1px solid var(--border);border-radius:12px;font-size:15.5px;line-height:1.7;color:var(--text)}
+.lettertext p{margin:0 0 12px}
+.lettertext p:last-child{margin-bottom:0}
+.lettertext a{color:var(--violet);text-decoration:underline;text-underline-offset:2px}
+.ltools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 4px}
+.ltools .meta{font-size:12.5px;color:var(--muted)}
+.copybtn.done{border-color:var(--violet);color:var(--violet)}
+.block[data-block="cl"] .num{color:var(--violet);font-weight:700;letter-spacing:.04em}
+
 .empty{display:none;text-align:center;color:var(--muted);padding:44px 0}
 .foot{margin-top:56px;text-align:center;font-size:12px;color:var(--muted)}
 
@@ -155,7 +167,7 @@ p.ind{margin-left:14px;padding-left:14px;border-left:2px solid var(--violet-mid)
 <div class="wrapper">
   <header class="hero">
     <h1>Dario - <b>Master Playbook</b></h1>
-    <p class="sub">Interview Playbook · Dario Bazan · 54 preguntas en 10 bloques · Actualizado el 23 Oct 2026</p>
+    <p class="sub">Interview Playbook · Dario Bazan · 54 preguntas en 10 bloques + cover letters · Actualizado el 4 Nov 2026</p>
   </header>
 
   <div class="controls">
@@ -170,7 +182,8 @@ p.ind{margin-left:14px;padding-left:14px;border-left:2px solid var(--violet-mid)
           <button type="button" data-role="product">Product Designer</button>
           <button type="button" data-role="digital">Digital Designer</button>
         </div>
-        <select class="tool" id="block-select" aria-label="Filtrar por bloque"><option value="all">Todos los bloques</option><option value="1">1. Primer contacto</option><option value="2">2. Motivación y perfil</option><option value="3">3. Proceso y forma de pensar</option><option value="4">4. Colaboración</option><option value="5">5. Marketing y comunicación</option><option value="6">6. UX y datos</option><option value="7">7. eCommerce y CRO</option><option value="8">8. Casos (Huntech)</option><option value="9">9. Más preguntas de trabajo</option><option value="10">10. Cierre</option></select>
+        <select class="tool" id="block-select" aria-label="Filtrar por bloque"><option value="all">Todos los bloques</option><option value="cl">Cover letters</option><option value="1">1. Primer contacto</option><option value="2">2. Motivación y perfil</option><option value="3">3. Proceso y forma de pensar</option><option value="4">4. Colaboración</option><option value="5">5. Marketing y comunicación</option><option value="6">6. UX y datos</option><option value="7">7. eCommerce y CRO</option><option value="8">8. Casos (Huntech)</option><option value="9">9. Más preguntas de trabajo</option><option value="10">10. Cierre</option></select>
+        <a class="tool" id="goto-cl" href="#cl">Cover letters ↓</a>
         <button class="tool" id="toggle-all" type="button">Expandir todo</button>
       </div>
             <div class="counter">Mostrando <strong id="count">0</strong> preguntas</div>
@@ -178,6 +191,66 @@ p.ind{margin-left:14px;padding-left:14px;border-left:2px solid var(--violet-mid)
   </div>
 
   <main id="content">
+<section class="block" data-block="cl" id="cl" data-unit="carta">
+<header class="bhead"><span class="bnum">Cover letters</span><h2>Cartas base para postulaciones</h2><span class="bline"></span><span class="bcount"></span></header>
+<article class="card letter" data-role="digital" data-block="cl">
+<h3 class="qh"><button class="card-btn" type="button" aria-expanded="false"><span class="num">DD</span><span class="title"><strong>Cover letter · </strong><mark><strong>Digital Designer</strong></mark><strong> (base)</strong></span><span class="rtag r-digital">Digital Designer</span><span class="chev" aria-hidden="true"></span></button></h3>
+<div class="body"><div class="formula"><div class="steps"><span class="chip">Saludo</span><span class="arr">→</span><span class="chip">canales y orden según el aviso</span><span class="arr">→</span><span class="chip">frase de IA si el aviso la pide</span><span class="arr">→</span><span class="chip">el resto queda fijo</span></div></div>
+<div class="ltools"><button class="tool copybtn" type="button" data-target="letter-dd">Copiar carta</button><span class="meta">Versión base · primera vez usada en NZ Digital (ref 19174), 4 Nov 2026. Hay un PDF aparte con la versión de NZ Digital.</span></div>
+<div class="lettertext" id="letter-dd">
+<p>Hi [Company] team,</p>
+<p>I'm a Digital Designer based in Auckland, with a background in graphic design and UX/UI. I have experience creating digital experiences and visual communication across websites, eCommerce, marketing campaigns and multiple digital channels.</p>
+<p>At Blackpepper, a specialist eCommerce agency, I designed websites and mobile apps for brands including Torpedo7, Kings Plant Barn, Glassons, Hallenstein and Starbucks. Working closely with developers, marketers, project managers and other designers, I turned briefs and business goals into practical, user-focused solutions, with a strong focus on usability and conversion. One example is the Huntech project, where the agency reported a 125% increase in revenue and a 41% increase in average order value year on year.</p>
+<p>Previously, as the sole designer at Tourism Waitaki for over three years, I managed projects from brief to delivery across several regional brands, including Alps 2 Ocean Cycle Trail and Ōamaru Blue Penguin Colony. My work included websites, landing pages, digital campaigns, EDMs and social media, while balancing priorities and maintaining quality and brand consistency.</p>
+<p>I'm confident working with Figma, design systems and reusable components, and collaborating with developers on clear handoffs so designs are practical and ready to build.</p>
+<p>I also integrate AI into my design process, from analysing briefs and exploring ideas to building clickable prototypes. I use Claude connected to Figma to work with design systems, creating and refining components and variants, and Figma Make to explore concepts and prototype faster. It helps me explore more options while maintaining consistency with the design system, and I remain responsible for the design decisions, quality and final polish.</p>
+<p>You can view my portfolio at <a href="https://www.dariobazan.com" target="_blank" rel="noopener">www.dariobazan.com</a>. I'd welcome the chance to talk about how my experience could help your team deliver great digital work.</p>
+<p>Kind regards,<br>Dario Bazan</p>
+</div>
+<div class="callout"><div class="clabel"><strong>Cómo reciclarla</strong></div>
+<ul>
+<li><strong>Saludo:</strong> cambiá <em>[Company]</em> por la empresa (o el nombre de la persona).</li>
+<li><strong>Puesto y referencia:</strong> no van en la carta. Van en el asunto del mail o en el formulario (por ejemplo, “Digital Designer, ref 19174 – Dario Bazan”).</li>
+<li><strong>Roles de campañas y marketing:</strong> en la primera frase poné primero EDMs, social y banners, y al final del párrafo de IA sumá: <em>“…to explore concepts and variations faster, then refine the final assets by hand.”</em></li>
+<li><strong>Roles de web, eCommerce o UI:</strong> dejá Huntech y design systems al frente, y al final del párrafo de IA sumá: <em>“…to go from brief to a clickable prototype faster, while keeping the design consistent with the design system.”</em></li>
+<li><strong>Si el aviso nombra otras herramientas de IA:</strong> sumá una línea, por ejemplo <em>“I also use tools such as Relume and Lovable to turn ideas into structured sitemaps and working prototypes.”</em></li>
+<li><strong>Firma:</strong> Dario Bazan, sin tilde (igual que el CV).</li>
+</ul></div>
+<div class="callout"><div class="clabel"><strong>Antes de enviar</strong></div>
+<p>El párrafo de IA habla de Claude conectado a Figma. Usalo cuando ya lo hayas practicado y puedas mostrar un ejemplo en la entrevista. Si el formulario es de texto plano, dejá el link como <em>www.dariobazan.com</em> (sin formato) y, si no muestra bien la “Ō” de Ōamaru, subí la carta en PDF.</p></div>
+</div>
+</article><article class="card letter" data-role="product" data-block="cl">
+<h3 class="qh"><button class="card-btn" type="button" aria-expanded="false"><span class="num">PD</span><span class="title"><strong>Cover letter · </strong><mark><strong>Product Designer</strong></mark><strong> (base)</strong></span><span class="rtag r-product">Product Designer</span><span class="chev" aria-hidden="true"></span></button></h3>
+<div class="body"><div class="formula"><div class="steps"><span class="chip">Saludo</span><span class="arr">→</span><span class="chip">frase propia solo si el rol lo vale</span><span class="arr">→</span><span class="chip">el resto queda fijo</span></div></div>
+<div class="ltools"><button class="tool copybtn" type="button" data-target="letter-pd">Copiar carta</button><span class="meta">Versión base · 4 Nov 2026. Sin línea específica de empresa: cambiás el saludo y listo.</span></div>
+<div class="lettertext" id="letter-pd">
+<p>Hi [Company] team,</p>
+<p>I'm a Product Designer with a strong UI focus, based in Auckland, with a background in digital design and eCommerce. I design digital experiences from wireframes and prototypes through to high-fidelity UI, balancing user needs, business goals and technical feasibility.</p>
+<p>At Blackpepper, a specialist eCommerce agency, I designed websites and mobile apps for brands including Torpedo7, Kings Plant Barn, Glassons, Hallenstein and Starbucks. I collaborated with developers, project managers, marketers, designers and stakeholders, providing clear design handoffs and balancing design intent with technical constraints. I contributed to design systems, adding and refining components and variants, and worked in a conversion-focused environment where design decisions were informed by available data, customer insights and business objectives. I also contributed to the Huntech redesign as part of the design team. The agency reported a 125% increase in revenue and a 41% increase in average order value year on year.</p>
+<p>Previously, as the sole designer at Tourism Waitaki, I worked across the full design process, from information architecture and wireframes through to final UI, launch and ongoing optimisation, across several regional digital platforms including Alps 2 Ocean Cycle Trail and Ōamaru Blue Penguin Colony.</p>
+<p>My digital design background also includes campaigns, EDMs and maintaining brand consistency across channels. This experience helps me collaborate effectively with marketing teams and consider the wider brand experience when designing digital products.</p>
+<p>I also integrate AI into my workflow, using Claude with Figma and Figma Make to work with design systems, explore concepts and prototype faster, while retaining ownership of the design decisions and final quality.</p>
+<p>You can view my work at <a href="https://www.dariobazan.com" target="_blank" rel="noopener">www.dariobazan.com</a>. I'd welcome the chance to talk about how I could contribute to your team.</p>
+<p>Kind regards,<br>Dario Bazan</p>
+</div>
+<div class="callout"><div class="clabel"><strong>Cómo reciclarla</strong></div>
+<ul>
+<li><strong>Saludo:</strong> cambiá <em>[Company]</em> por la empresa (o el nombre de la persona). Con eso alcanza para la mayoría de las postulaciones.</li>
+<li><strong>Puesto y referencia:</strong> no van en la carta. Van en el asunto del mail o en el formulario.</li>
+<li><strong>Solo en los roles que más te interesen,</strong> sumá una frase propia antes del cierre. Ejemplos: <em>“What draws me to [Company] is [algo concreto de su producto o su forma de trabajar].”</em> Si el aviso pone peso en research con clientes, podés sumar: <em>“I’m keen to get closer to customers through research and testing.”</em> (muestra interés, no afirma experiencia).</li>
+<li><strong>Avisos de B2C, marketplace o eCommerce:</strong> dejá Blackpepper y Huntech al frente. <strong>Avisos de SaaS o producto complejo:</strong> reforzá design systems, handoff y trade-offs, y dejá el resto igual.</li>
+<li><strong>Firma:</strong> Dario Bazan, sin tilde (igual que el CV).</li>
+</ul></div>
+<div class="callout"><div class="clabel"><strong>Antes de enviar</strong></div>
+<ul>
+<li>La carta <strong>no afirma</strong> research con usuarios, A/B testing ni pruebas de usabilidad, y no hace falta mencionar que no los hacías. Si te preguntan en la entrevista, respondé con calma: usabas los resultados del equipo para diseñar y querés asumir más de esa parte.</li>
+<li>El párrafo de IA habla de Claude con Figma: usalo cuando ya lo hayas practicado y puedas mostrar un ejemplo.</li>
+<li>No menciones <em>product managers</em> a menos que hayas trabajado con alguien en ese rol: en la carta figuran <em>project managers</em> y stakeholders.</li>
+<li>Si el formulario es de texto plano, dejá el link como <em>www.dariobazan.com</em> (sin formato) y, si no muestra bien la “Ō” de Ōamaru, subí la carta en PDF.</li>
+</ul></div>
+</div>
+</article>
+</section>
 <section class="block" data-block="1" id="b1">
 <header class="bhead"><span class="bnum">Bloque 1</span><h2>Primer contacto</h2><span class="bline"></span><span class="bcount"></span></header>
 <article class="card" data-role="all" data-block="1">
@@ -635,7 +708,7 @@ p.ind{margin-left:14px;padding-left:14px;border-left:2px solid var(--violet-mid)
   function apply(){
     var term=searchEl.value.trim().toLowerCase();
     clearEl.style.display=term?'block':'none';
-    var shown=0;
+    var shown=0, shownQ=0;
     cards.forEach(function(c){
       var r=c.dataset.role;
       var roleOk = role==='all' || r==='all' || r===role;
@@ -643,14 +716,15 @@ p.ind{margin-left:14px;padding-left:14px;border-left:2px solid var(--violet-mid)
       var termOk = !term || c._text.indexOf(term)>-1;
       var ok = roleOk && blockOk && termOk;
       c.style.display = ok?'':'none';
-      if(ok) shown++;
+      if(ok){ shown++; if(!c.classList.contains('letter')) shownQ++; }
     });
     sections.forEach(function(s){
       var n=0; [].forEach.call(s.querySelectorAll('.card'),function(c){ if(c.style.display!=='none') n++; });
       s.style.display = n?'':'none';
-      s.querySelector('.bcount').textContent = n + (n===1?' pregunta':' preguntas');
+      var u=s.dataset.unit||'pregunta';
+      s.querySelector('.bcount').textContent = n + ' ' + u + (n===1?'':'s');
     });
-    countEl.textContent=shown;
+    countEl.textContent=shownQ;
     emptyEl.style.display=shown?'none':'block';
   }
   document.getElementById('roles').addEventListener('click',function(e){
@@ -670,6 +744,18 @@ p.ind{margin-left:14px;padding-left:14px;border-left:2px solid var(--violet-mid)
     var card=btn.closest('.card');
     var open=card.classList.toggle('open');
     btn.setAttribute('aria-expanded',open?'true':'false');
+  });
+
+  document.getElementById('goto-cl').addEventListener('click',function(){
+    block='all'; document.getElementById('block-select').value='all'; apply();
+  });
+  document.getElementById('content').addEventListener('click',function(e){
+    var b=e.target.closest('.copybtn'); if(!b) return;
+    var el=document.getElementById(b.dataset.target); if(!el) return;
+    var txt=[].map.call(el.querySelectorAll('p'),function(p){return p.innerText.trim();}).join('\n\n');
+    function ok(){ var old=b.textContent; b.textContent='Copiada ✓'; b.classList.add('done'); setTimeout(function(){b.textContent='Copiar carta'; b.classList.remove('done');},1800); }
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok,function(){fallback();}); } else { fallback(); }
+    function fallback(){ var t=document.createElement('textarea'); t.value=txt; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.select(); try{document.execCommand('copy');ok();}catch(_){} document.body.removeChild(t); }
   });
   var allOpen=false;
   toggleAll.addEventListener('click',function(){
